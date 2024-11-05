@@ -117,19 +117,29 @@
 	///Should only be a key-value list of north/south/east/west = atom/movable/screen.
 	var/list/char_render_holders
 
-	///Amount of keydowns in the last keysend checking interval
+	/// Last time they used fix macros
+	var/last_macro_fix = 0
+	/// Keys currently held
+	var/list/keys_held = list()
+	/// These next two vars are to apply movement for keypresses and releases made while move delayed.
+	/// Because discarding that input makes the game less responsive.
+ 	/// On next move, add this dir to the move that would otherwise be done
+	var/next_move_dir_add
+ 	/// On next move, subtract this dir from the move that would otherwise be done
+	var/next_move_dir_sub
+	/// Amount of keydowns in the last keysend checking interval
 	var/client_keysend_amount = 0
-	///World tick time where client_keysend_amount will reset
+	/// World tick time where client_keysend_amount will reset
 	var/next_keysend_reset = 0
-	///World tick time where keysend_tripped will reset back to false
+	/// World tick time where keysend_tripped will reset back to false
 	var/next_keysend_trip_reset = 0
-	///When set to true, user will be autokicked if they trip the keysends in a second limit again
+	/// When set to true, user will be autokicked if they trip the keysends in a second limit again
 	var/keysend_tripped = FALSE
+	/// custom movement keys for this client
+	var/list/movement_keys = list()
 
 	var/atom/movable/screen/movable/mouseover/mouseovertext
 	var/atom/movable/screen/movable/mouseover/mouseoverbox
-	///custom movement keys for this client
-	var/list/movement_keys = list()
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
@@ -143,6 +153,10 @@
 	var/rain_sound = FALSE
 	var/last_droning_sound
 	var/sound/droning_sound
+
+	/// AFK tracking
+	var/last_activity = 0
+
 
 /client/proc/update_weather(force)
 	if(!mob)

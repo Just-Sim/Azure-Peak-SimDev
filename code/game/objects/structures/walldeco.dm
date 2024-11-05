@@ -262,6 +262,9 @@
 	var/stop_yapping = 0
 	var/onoff = 0
 
+/obj/structure/fluff/walldeco/alarm/proc/stop_yapping()	// Sleep sucks so we'll use a timer instead
+	stop_yapping = 0
+
 /obj/structure/fluff/walldeco/alarm/attack_hand(mob/living/user)
 
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -298,8 +301,7 @@
 			playsound(loc, 'sound/misc/gold_license.ogg', 100, TRUE, -1)
 			say("UNKNOWN PERSON IN SECURE AREA- ARRETZ-VOUZ!!")
 			stop_yapping = 1
-			sleep(60)
-			stop_yapping = 0
+			addtimer(CALLBACK(src, "stop_yapping"), 60 SECONDS)
 			return
 
 		if(HAS_TRAIT(user, TRAIT_NOBLE))
@@ -307,8 +309,7 @@
 			icon_state = "face"
 			say("Salut, [user.real_name] de Sommet. Thirty-breths silence period active por votre grace.")
 			playsound(loc, 'sound/misc/gold_menu.ogg', 100, TRUE, -1)
-			sleep(300)
-			stop_yapping = 0
+			addtimer(CALLBACK(src, "stop_yapping"), 300 SECONDS)
 			icon_state = "alarm"
 			return
 
@@ -316,20 +317,18 @@
 			playsound(loc, 'sound/misc/gold_menu.ogg', 100, TRUE, -1)
 			say("Yeoman [user.real_name] logged entering zone securisee.")
 			stop_yapping = 1
-			sleep(60)
-			stop_yapping = 0
+			addtimer(CALLBACK(src, "stop_yapping"), 60 SECONDS)
 			return
 
 		else //?????
 			playsound(loc, 'sound/misc/gold_license.ogg', 100, TRUE, -1)
 			say("UNAUTHORIZED PERSON IN SECURE AREA- ARRETZ-VOUZ!!")
 			stop_yapping = 1
-			sleep(60)
-			stop_yapping = 0
+			addtimer(CALLBACK(src, "stop_yapping"), 60 SECONDS)
+			return
 
 	else
 		playsound(loc, 'sound/misc/gold_license.ogg', 100, TRUE, -1)
 		say("UNKNOWN CREATURE IN SECURE AREA- ARRETZ-VOUS!!")
 		stop_yapping = 1
-		sleep(60)
-		stop_yapping = 0
+		addtimer(CALLBACK(src, "stop_yapping"), 60 SECONDS)

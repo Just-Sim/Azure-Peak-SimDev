@@ -7,6 +7,8 @@
 	var/category = CATEGORY_MISC
 	var/weight = WEIGHT_LOWEST
 	var/keybind_signal
+	/// Is this a clientside verb trigger? If so, this should be set to the name of the verb.
+	var/clientside
 
 /datum/keybinding/New()
 

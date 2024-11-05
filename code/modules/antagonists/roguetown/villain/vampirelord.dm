@@ -582,9 +582,13 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	. = ..()
 	set_light(3, 20, LIGHT_COLOR_BLOOD_MAGIC)
 	playsound(loc, 'sound/misc/portalopen.ogg', 100, FALSE, pressure_affected = FALSE)
-	sleep(600)
+	addtimer(CALLBACK(src, "handle_closing"), 600) // Schedule after 600 ticks
+	return
+
+/obj/structure/vampire/portal/proc/handle_closing()
 	visible_message(span_boldnotice("[src] shudders before rapidly closing."))
 	qdel(src)
+	return
 
 /obj/structure/vampire/portal/sending/Destroy()
 	for(var/obj/structure/vampire/portalmaker/PM in GLOB.vampire_objects)

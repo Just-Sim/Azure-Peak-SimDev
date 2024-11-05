@@ -347,10 +347,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				qdel(src)
 				return
 
-	if(SSinput.initialized)
-		set_macros()
-		update_movement_keys()
-
 //	chatOutput.start() // Starts the chat
 
 	if(alert_mob_dupe_login)
@@ -924,10 +920,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		// If hotkey mode is enabled, then clicking the map will automatically
 		// unfocus the text bar. This removes the red color from the text bar
 		// so that the visual focus indicator matches reality.
-		winset(src, null, "command=disableInput input.background-color=[COLOR_INPUT_DISABLED] input.text-color = #ad9eb4")
+		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
 
 	else
-		winset(src, null, "input.focus=true command=activeInput input.background-color=[COLOR_INPUT_ENABLED] input.text-color = #EEEEEE")
+		winset(src, null, "input.background-color=[COLOR_INPUT_ENABLED] input.text-color = #EEEEEE")
 
 	..()
 

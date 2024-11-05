@@ -80,13 +80,10 @@
 	if(world.time < move_delay) //do not move anything ahead of this check please
 		return FALSE
 	else
-		next_move_dir_add = 0
-		next_move_dir_sub = 0
+		next_move_dir_add = next_move_dir_sub = NONE
 	var/old_move_delay = move_delay
 	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
-	if(!mob || !mob.loc)
-		return FALSE
-	if(!n || !direct)
+	if(!n || !direct || !mob?.loc)
 		return FALSE
 	if(mob.notransform)
 		return FALSE	//This is sota the goto stop mobs from moving var
